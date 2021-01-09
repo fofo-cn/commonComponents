@@ -3,7 +3,12 @@
     <p @click="popup = true">
       筛选
     </p>
-    <van-popup v-model="popup" @click-overlay="popup = false" position="bottom">
+    <el-dialog
+      title="提示"
+      :visible.sync="popup"
+      width="30%"
+      :before-close="handleClose"
+    >
       <div
         class="container"
         v-for="(item, groupIndex) in form"
@@ -25,7 +30,7 @@
           </li>
         </ul>
       </div>
-    </van-popup>
+    </el-dialog>
   </div>
 </template>
 
@@ -48,6 +53,9 @@ export default class MultipleSelect extends Vue {
     // this.group = title;
     // console.log(this.value[this.group]);
     this.$emit("getId", id);
+  }
+  handleClose(){
+    this.popup = false
   }
 }
 </script>

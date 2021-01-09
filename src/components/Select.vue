@@ -1,9 +1,18 @@
 <template>
   <main>
-    <p @click="popup = true" :class="{ text: form.text, button: form.button }">
+    <el-button
+      type="primary"
+      @click="popup = true"
+      :class="{ text: form.text, button: form.button }"
+    >
       {{ form.title }}
-    </p>
-    <van-popup v-model="popup" @click-overlay="popup = false" position="bottom">
+    </el-button>
+    <el-dialog
+      title="提示"
+      :visible.sync="popup"
+      width="30%"
+      :before-close="handleClose"
+    >
       <div class="container">
         <p class="title">{{ form.title }}</p>
         <ul>
@@ -17,7 +26,7 @@
           </li>
         </ul>
       </div>
-    </van-popup>
+    </el-dialog>
   </main>
 </template>
 
@@ -32,6 +41,9 @@ export default class Select extends Vue {
     this.value = id;
     this.$emit("getId", id);
   }
+  handleClose() {
+    this.popup = false;
+  }
 }
 </script>
 
@@ -39,10 +51,6 @@ export default class Select extends Vue {
 main {
   .button {
     margin: 8px;
-    min-width: 80px;
-    border: 1px solid #3fbf8d;
-    background: #ebf9f3;
-    border-radius: 4px;
   }
   .container {
     .title {
